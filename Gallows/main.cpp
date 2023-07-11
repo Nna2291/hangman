@@ -16,6 +16,7 @@ bool game() {
 	int correct = 0;
 	int diff;
 	int mistakes = 0;
+
 	vector<char> letters;
 	string a;
 	string word;
@@ -28,6 +29,7 @@ bool game() {
 		answer = check_start_info(diff, word);
 	}
 	game_started();
+
 	char y = word[rand() % word.length()];
 	char x = word[rand() % word.length()];
 	while (x == y) {
@@ -38,8 +40,13 @@ bool game() {
 	
 	while (mistakes != 9 - diff) {
 		draw_visel(diff, mistakes);
-		draw_word(word, letters);
+
+		if (draw_word(word, letters)) {
+			return true;
+		}
+
 		a = ask_letter();
+		
 		transform(a.begin(), a.end(), a.begin(), [](unsigned char c) { return tolower(c); });
 		if (find(letters.begin(), letters.end(), a[0]) != letters.end()) {
 			cout << "You already tried this letter! (press any key to continue)" << endl;
@@ -47,7 +54,7 @@ bool game() {
 			cin.ignore((numeric_limits<streamsize>::max)(), '\n');
 			cin.get();
 		}
-		else if (word.find(a) != std::string::npos) {
+		else if (word.find(a) != string::npos) {
 			letters.push_back(a[0]);
 			correct++;
 		} 
@@ -55,11 +62,7 @@ bool game() {
 			mistakes++;
 			letters.push_back(a[0]);
 		}
-		if (correct + 2 == word.length()) {
-			draw_visel(diff, mistakes);
-			draw_word(word, letters);
-			return true;
-		}
+		
 	}
 	draw_visel(diff, mistakes);
 	cout << word << endl;

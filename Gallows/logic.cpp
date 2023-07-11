@@ -146,7 +146,8 @@ void game_started() {
 		" #####  #    # #    # ######     ####    #   #    # #    #   #   ###### #####  ###\n\n";
 }
 
-void draw_word(string word, vector<char> letters) {
+bool draw_word(string word, vector<char> letters) {
+	bool word_guessed = true;
 	cout << "Guessed word: ";
 	for (int i = 0; i < word.length(); i++)
 	{
@@ -155,9 +156,11 @@ void draw_word(string word, vector<char> letters) {
 		}
 		else {
 			cout << "_";
+			word_guessed = false;
 		}
 	}
 	cout << endl;
+	return word_guessed;
 }
 
 string ask_letter() {
