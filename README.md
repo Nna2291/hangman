@@ -1,1 +1,1 @@
-# Gallows
+# Hangman
